@@ -1,5 +1,6 @@
 import * as _ from 'lodash';
 import * as Po from 'pofile';
+import IPoItem = pofile.IPoItem;
 
 function referenceMatches(oldRef: string, newRef: string): boolean {
   return _(oldRef).split(':').first() === _(newRef).split(':').first();
@@ -84,8 +85,15 @@ export class Registry {
       });
     });
 
-    catalog.items.sort((a: any, b: any) => {
-      return a.msgid.localeCompare(b.msgid);
+    catalog.items.sort((a: IPoItem, b: IPoItem) => {
+      const idComparison = a.msgid.localeCompare(b.msgid);
+      if (idComparison !== 0) {
+        return idComparison;
+      }
+      if (a.msgctxt && b.msgctxt) {
+        return a.msgctxt.localeCompare(b.msgctxt);
+      }
+      return 0;
     });
 
     return catalog.toString();

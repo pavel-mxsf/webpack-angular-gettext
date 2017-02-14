@@ -78,7 +78,14 @@ var Registry = (function () {
             });
         });
         catalog.items.sort(function (a, b) {
-            return a.msgid.localeCompare(b.msgid);
+            var idComparison = a.msgid.localeCompare(b.msgid);
+            if (idComparison !== 0) {
+                return idComparison;
+            }
+            if (a.msgctxt && b.msgctxt) {
+                return a.msgctxt.localeCompare(b.msgctxt);
+            }
+            return 0;
         });
         return catalog.toString();
     };
