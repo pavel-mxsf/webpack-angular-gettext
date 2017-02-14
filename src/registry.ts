@@ -93,6 +93,12 @@ export class Registry {
       if (a.msgctxt && b.msgctxt) {
         return a.msgctxt.localeCompare(b.msgctxt);
       }
+      if (a.msgctxt) {
+        return 1;
+      }
+      if (b.msgctxt) {
+        return -1;
+      }
       return 0;
     });
 
