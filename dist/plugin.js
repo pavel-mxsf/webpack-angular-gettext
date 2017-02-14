@@ -23,12 +23,19 @@ var AngularGettextPlugin = (function () {
             compilation.plugin('normal-module-loader', function (loaderContext) {
                 loaderContext.addGettextStrings = _this.addGettextStrings.bind(_this);
                 loaderContext.pruneGettextStrings = _this.registry.pruneGetTextStrings.bind(_this.registry);
+                loaderContext.fileNamesFilter = _this.filterFilename.bind(_this);
             });
         });
         compiler.plugin('emit', this.emitResult.bind(this));
     };
     AngularGettextPlugin.prototype.addGettextStrings = function (strings) {
         this.registry.addGetTextStrings(strings);
+    };
+    AngularGettextPlugin.prototype.filterFilename = function (filename) {
+        if (this.options.fileNamesFilter) {
+            return filename.replace(this.options.fileNamesFilter, '');
+        }
+        return filename;
     };
     AngularGettextPlugin.prototype.emitResult = function (compilation, callback) {
         var content = this.registry.toString();

@@ -52,7 +52,9 @@ function extractTranslations(loader: GettextLoaderContext, source: string, sourc
   const options = loaderUtils.parseQuery(this.query);
   const extractor = new Extractor(options);
   const root = findRoot(this.options.context, this.options.entry.main);
-  const filename = path.relative(root, this.resourcePath).replace(/^(\.\.\/)*(node_modules\/)?(src\/)?/, '');
+  let filename = path.relative(root, this.resourcePath);
+
+  filename = loader.fileNamesFilter(filename);
 
   extractor.parse(filename, source);
 

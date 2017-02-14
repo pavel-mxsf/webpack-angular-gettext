@@ -9,6 +9,7 @@ interface PluginOptions {
    * The name of the output file
    */
   fileName?: string;
+  fileNamesFilter?: RegExp;
 }
 
 export class AngularGettextPlugin implements Plugin {
@@ -37,6 +38,7 @@ export class AngularGettextPlugin implements Plugin {
       compilation.plugin('normal-module-loader', (loaderContext: GettextLoaderContext) => {
         loaderContext.addGettextStrings = this.addGettextStrings.bind(this);
         loaderContext.pruneGettextStrings = this.registry.pruneGetTextStrings.bind(this.registry);
+        loaderContext.fileNamesFilter = this.filterFilename.bind(this);
       });
     });
 
@@ -45,6 +47,13 @@ export class AngularGettextPlugin implements Plugin {
 
   addGettextStrings(strings: angularGettextTools.Strings): void {
     this.registry.addGetTextStrings(strings);
+  }
+
+  filterFilename(filename: string): string {
+    if (this.options.fileNamesFilter) {
+      return filename.replace(this.options.fileNamesFilter, '');
+    }
+    return filename;
   }
 
   emitResult(compilation: Compilation, callback: () => void): void {
