@@ -42,7 +42,7 @@ module.exports = {
 The `Plugin()` accepts the following options in the constructor:
 
 * fileName: The name of the file that contains all the translations, default `translations.pot`
-
+* fileNamesFilter: RegExp - matches will be striped from output .pot file (useful to normalize outputs)
 
 [angular-gettext]: https://github.com/rubenv/angular-gettext
 [webpack-angular-translate]: https://github.com/DatenMetzgerX/webpack-angular-translate
