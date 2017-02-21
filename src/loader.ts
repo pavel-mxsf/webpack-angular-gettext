@@ -58,8 +58,7 @@ function extractTranslations(loader: GettextLoaderContext, source: string, sourc
 
   extractor.parse(filename, source);
 
-  loader.pruneGettextStrings(filename);
-  loader.addGettextStrings(_.clone(extractor.strings));
+  loader.addGettextStrings(filename, _.clone(extractor.strings));
   loader.callback(null, source, sourceMaps);
 }
 

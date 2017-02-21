@@ -10,7 +10,12 @@ declare module webpack {
         errors: Error[];
         warnings: Error[];
         plugin(phase:string, handler: Function): void;
-        assets: { [name: string]: Source }
+        assets: { [name: string]: Source };
+        children: [any];
+        chunks: any;
+        dependencyTemplates: any;
+        entries: any;
+        compiler: any;
     }
 
     interface Plugin {

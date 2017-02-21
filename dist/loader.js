@@ -50,8 +50,7 @@ function extractTranslations(loader, source, sourceMaps) {
     var filename = path.relative(root, this.resourcePath);
     filename = loader.fileNamesFilter(filename);
     extractor.parse(filename, source);
-    loader.pruneGettextStrings(filename);
-    loader.addGettextStrings(_.clone(extractor.strings));
+    loader.addGettextStrings(filename, _.clone(extractor.strings));
     loader.callback(null, source, sourceMaps);
 }
 module.exports = extractLoader;
